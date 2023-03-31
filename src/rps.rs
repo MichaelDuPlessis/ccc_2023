@@ -49,6 +49,10 @@ impl RPSMove {
             _ => MatchOutcome::Loss('X'),
         }
     }
+
+    pub fn get_char(&self) -> char {
+        self.0
+    }
 }
 
 pub fn outcome_of_tournament_round(competitors: Vec<RPSMove>) {
@@ -62,3 +66,9 @@ pub fn outcome_of_tournament_round(competitors: Vec<RPSMove>) {
         }
     }
 }
+
+/*
+    |=> S(S/P)
+SP --
+    |=> P(P/R)
+*/
