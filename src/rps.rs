@@ -1,11 +1,23 @@
 #[derive(Clone, Copy)]
 pub struct RPSMove(char);
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum MatchOutcome {
     Win(char),
     Draw(char),
     Loss(char),
+}
+
+impl std::fmt::Display for RPSMove {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl std::fmt::Display for MatchOutcome {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 impl MatchOutcome {
