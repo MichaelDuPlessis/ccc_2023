@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::rps::RPSMove;
 
 pub struct Fight {
@@ -20,5 +22,11 @@ impl Fight {
 
     pub fn fight_char(&self) -> char {
         self.f1.outcome_of_match(&self.f2).get_char()
+    }
+}
+
+impl Display for Fight {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}{}", self.f1, self.f2)
     }
 }
