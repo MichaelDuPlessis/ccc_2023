@@ -7,8 +7,6 @@ fn main() {
         let (n_str, m_str) = lines.next().unwrap().split_once(' ').unwrap();
         let n = n_str.parse::<usize>().unwrap();
         let m = m_str.parse::<usize>().unwrap();
-        
-        
 
         let out = lines
             .map(|line| match line {
