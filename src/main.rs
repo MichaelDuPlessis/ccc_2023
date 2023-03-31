@@ -1,4 +1,7 @@
+mod fight;
 mod rps;
+
+use rps::RPSMove;
 
 fn main() {
     for i in 1..=5 {
@@ -8,21 +11,16 @@ fn main() {
         let n = n_str.parse::<usize>().unwrap();
         let m = m_str.parse::<usize>().unwrap();
 
-        let out = lines
-            .map(|line| match line {
-                "RR" => "R",
-                "RP" => "P",
-                "RS" => "R",
-                "SS" => "S",
-                "SR" => "R",
-                "SP" => "S",
-                "PP" => "P",
-                "PR" => "P",
-                "PS" => "S",
-                _ => "How did we get here",
+        let fights = lines
+            .map(|line| {
+                let fighters = line.as_bytes().chunks(2);
+                fighters
+                    .map(|f| vec![RPSMove::new(f[0] as char), RPSMove::new(f[1] as char)])
+                    .flatten()
+                    .collect::<Vec<RPSMove>>()
             })
-            .collect::<Vec<&str>>();
+            .collect::<Vec<Vec<RPSMove>>>();
 
-        std::fs::write(format!("./level1/level1_{i}.out"), out.join("\n")).unwrap();
+        // std::fs::write(format!("./level1/level1_{i}.out"), out.join("\n")).unwrap();
     }
 }
