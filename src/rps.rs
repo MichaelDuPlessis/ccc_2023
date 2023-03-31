@@ -1,6 +1,6 @@
 pub struct RPSMove(char);
 
-enum MatchOutcome {
+pub enum MatchOutcome {
     Win,
     Draw,
     Loss,
