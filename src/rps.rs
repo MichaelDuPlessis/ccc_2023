@@ -1,9 +1,9 @@
 pub struct RPSMove(char);
 
 pub enum MatchOutcome {
-    Win,
-    Draw,
-    Loss,
+    Win(char),
+    Draw(char),
+    Loss(char),
 }
 
 impl RPSMove {
@@ -13,13 +13,16 @@ impl RPSMove {
 
     pub fn outcome_of_match(&self, other: RPSMove) -> MatchOutcome {
         match (self.0, other.0) {
-            ('R', 'S') => MatchOutcome::Win,
-            ('P', 'R') => MatchOutcome::Win,
-            ('S', 'P') => MatchOutcome::Win,
-            ('R', 'R') => MatchOutcome::Draw,
-            ('S', 'S') => MatchOutcome::Draw,
-            ('P', 'P') => MatchOutcome::Draw,
-            _ => MatchOutcome::Loss,
+            ('R', 'S') => MatchOutcome::Win('R'),
+            ('P', 'R') => MatchOutcome::Win('P'),
+            ('S', 'P') => MatchOutcome::Win('S'),
+            ('R', 'R') => MatchOutcome::Draw('R'),
+            ('S', 'S') => MatchOutcome::Draw('S'),
+            ('P', 'P') => MatchOutcome::Draw('P'),
+            ('R', 'P') => MatchOutcome::Loss('P'),
+            ('P', 'S') => MatchOutcome::Loss('S'),
+            ('S', 'R') => MatchOutcome::Loss('R'),
+            _ => MatchOutcome::Loss('X'),
         }
     }
 }
