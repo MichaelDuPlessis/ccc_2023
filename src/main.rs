@@ -1,6 +1,7 @@
 mod fight;
 mod rps;
 
+use fight::Fight;
 use rps::RPSMove;
 
 fn main() {
@@ -15,11 +16,10 @@ fn main() {
             .map(|line| {
                 let fighters = line.as_bytes().chunks(2);
                 fighters
-                    .map(|f| vec![RPSMove::new(f[0] as char), RPSMove::new(f[1] as char)])
-                    .flatten()
-                    .collect::<Vec<RPSMove>>()
+                    .map(|f| Fight::new(RPSMove::new(f[0] as char), RPSMove::new(f[1] as char)))
+                    .collect::<Vec<Fight>>()
             })
-            .collect::<Vec<Vec<RPSMove>>>();
+            .collect::<Vec<_>>();
 
         // std::fs::write(format!("./level1/level1_{i}.out"), out.join("\n")).unwrap();
     }
