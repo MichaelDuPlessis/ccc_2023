@@ -8,7 +8,7 @@ fn main() {
             .map(|line| match line {
                 "RR" => "R",
                 "RP" => "P",
-                "RS" => "S",
+                "RS" => "R",
                 "SS" => "S",
                 "SR" => "R",
                 "SP" => "S",
