@@ -8,12 +8,22 @@ pub enum MatchOutcome {
     Loss(char),
 }
 
+impl MatchOutcome {
+    pub fn get_char(&self) -> char {
+        *match self {
+            MatchOutcome::Win(c) => c,
+            MatchOutcome::Draw(c) => c,
+            MatchOutcome::Loss(c) => c,
+        }
+    }
+}
+
 impl RPSMove {
     pub fn new(rps_move: char) -> Self {
         Self(rps_move)
     }
 
-    pub fn outcome_of_match(&self, other: RPSMove) -> MatchOutcome {
+    pub fn outcome_of_match(&self, other: &RPSMove) -> MatchOutcome {
         match (self.0, other.0) {
             ('R', 'S') => MatchOutcome::Win('R'),
             ('P', 'R') => MatchOutcome::Win('P'),
