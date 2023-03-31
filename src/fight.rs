@@ -10,11 +10,11 @@ impl Fight {
         Self { f1, f2 }
     }
 
-    pub fn fight(&self) -> &RPSMove {
+    pub fn fight(self) -> RPSMove {
         match self.f1.outcome_of_match(&self.f2) {
-            crate::rps::MatchOutcome::Win(_) => &self.f1,
-            crate::rps::MatchOutcome::Draw(_) => &self.f1,
-            crate::rps::MatchOutcome::Loss(_) => &self.f2,
+            crate::rps::MatchOutcome::Win(_) => self.f1,
+            crate::rps::MatchOutcome::Draw(_) => self.f1,
+            crate::rps::MatchOutcome::Loss(_) => self.f2,
         }
     }
 
