@@ -59,3 +59,12 @@ fn main() {
         // std::fs::write(format!("./level2/level2_{i}.out"), out).unwrap();
     }
 }
+
+fn get_win(style: char) -> char {
+    match style {
+        'R' => 'P',
+        'P' => 'S',
+        'S' => 'R',
+        _ => panic!(),
+    }
+}
