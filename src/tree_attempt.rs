@@ -1,29 +1,87 @@
-use crate::rps::RPSMove;
+pub fn try_solve(amounts: (usize, usize, usize)) {
+    let mut num_rocks = amounts.0;
+    let mut num_papers = amounts.1;
+    let mut num_scissors = amounts.2;
 
-pub enum TreeNode {
-    Value((RPSMove, RPSMove)),
-    Children(
-        (RPSMove, RPSMove),
-        (Box<Option<TreeNode>>, Box<Option<TreeNode>>),
-    ),
-}
+    let total = num_rocks + num_papers + num_scissors;
 
-pub fn build_tree(top_nodes: Vec<(RPSMove, RPSMove)>, depth: usize) {
-    for node in top_nodes {
-        let new_node = TreeNode::Children(node, (Box::new(None), Box::new(None)));
-    }
-}
+    let top_number = total / 4;
 
-pub fn expand_node(node: &mut TreeNode, remaining_choices: &mut Vec<RPSMove>) {
-    match node {
-        TreeNode::Value(_) => todo!(),
-        TreeNode::Children((move_1, move_2), (left_node, right_node)) => {
-            
-            let ideal_move;
-            
-            if move_1.get_char() == 'S'
+    let mut matches = String::from("");
+    let mut top_scissors = 0;
 
-            left_node = Box::new(TreeNode::Children(move_1, ()))
+    for _ in 0..top_number {
+        if num_scissors > 0 {
+            matches.push('S');
+            num_scissors -= 1;
+            top_scissors += 1;
+        } else if num_papers > 0 {
+            matches.push('P');
+            num_papers -= 1;
         }
+    }
+
+    println!("{}", matches);
+
+    for _ in 0..2 {
+        let mut round_below = String::new();
+
+        for c in matches.chars() {
+            match c {
+                'R' => {
+                    if num_papers > 0 {
+                        round_below.push('R');
+                        round_below.push('P');
+                        num_papers -= 1;
+                    } else {
+                        if num_rocks == 0 {
+                            panic!("we failed at rock boss...");
+                        }
+                        round_below.push('R');
+                        round_below.push('R');
+                        num_rocks -= 1;
+                    }
+                }
+                'P' => {
+                    if num_rocks > 0 {
+                        round_below.push('P');
+                        round_below.push('R');
+                        num_rocks -= 1;
+                    } else if num_papers > 0 {
+                        round_below.push('P');
+                        round_below.push('P');
+                        num_papers -= 1;
+                    } else if num_scissors > 0 {
+                        round_below.push('P');
+                        round_below.push('S');
+                        num_scissors -= 1;
+                    } else {
+                        panic!("failed at paper");
+                    }
+                }
+                'S' => {
+                    if num_papers > 0 {
+                        round_below.push('S');
+                        round_below.push('P');
+                        num_papers -= 1;
+                    } else if num_scissors > 0 {
+                        round_below.push('S');
+                        round_below.push('S');
+                        num_scissors -= 1;
+                    } else if num_rocks > 0 && top_scissors > 1 {
+                        round_below.push('S');
+                        round_below.push('R');
+                        num_rocks -= 1;
+                        top_scissors -= 1;
+                    } else {
+                        panic!("failed at scissors");
+                    }
+                }
+                _ => panic!("wrong char!!"),
+            }
+        }
+
+        println!("{}", round_below);
+        matches = round_below;
     }
 }
